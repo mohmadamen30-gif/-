@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة نيوتن — محمد أمين | جميع الخدمات الرقمية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   ROOT VARIABLES
+═══════════════════════════════════════════ */
+:root {
+  --ink:        #06080F;
+  --deep:       #0B0F1C;
+  --surface:    #101524;
+  --card:       #141929;
+  --border:     rgba(212,175,88,0.14);
+  --border-hi:  rgba(212,175,88,0.4);
+
+  --gold:       #D4AF58;
+  --gold-lt:    #F0D080;
+  --gold-dk:    #8A6A1E;
+  --gold-glow:  rgba(212,175,88,0.18);
+
+  --platinum:   #E8E4DC;
+  --silver:     #9BAABB;
+  --mist:       rgba(232,228,220,0.55);
+
+  --teal:       #00BFA6;
+  --teal-dim:   rgba(0,191,166,.12);
+
+  --r: .75rem;
+  --r-lg: 1.25rem;
+  --r-xl: 1.75rem;
+
+  --ease-silk: cubic-bezier(.25,.46,.45,.94);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ═══════════════════════════════════════════
+   BASE RESET
+═══════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+
+/* Remove ALL default focus outlines / tap highlights */
+*, *:focus, *:focus-visible, *:focus-within,
+a, button, [tabindex] {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--ink);
+  color: var(--platinum);
+  overflow-x: hidden;
+  cursor: default; 
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════
+   NOISE TEXTURE OVERLAY
+═══════════════════════════════════════════ */
+body::after {
+  content:''; position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .022; pointer-events:none; z-index:1;
+}
+
+/* ═══════════════════════════════════════════
+   DOT GRID
+═══════════════════════════════════════════ */
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image: radial-gradient(circle, rgba(212,175,88,.12) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events:none; z-index:0;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+nav {
+  position: fixed; top:0; width:100%; z-index:500;
+  display: flex; align-items:center; justify-content:space-between;
+  padding: 0 5%;
+  height: 76px;
+  background: rgba(6,8,15,.82);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-brand {
+  display: flex; align-items:center; gap:16px;
+  text-decoration:none;
+}
+.brand-gem {
+  position:relative;
+  width:48px; height:48px;
+  background: linear-gradient(145deg, var(--gold-lt) 0%, var(--gold) 45%, var(--gold-dk) 100%);
+  border-radius: 14px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 0 0 1px rgba(212,175,88,.3), 0 8px 32px rgba(212,175,88,.25), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.brand-gem::before {
+  content:'';
+  position:absolute; inset:-5px;
+  border-radius:18px;
+  border: 1px solid rgba(212,175,88,.22);
+  animation: gem-pulse 3s ease-in-out infinite;
+}
+@keyframes gem-pulse {
+  0%,100%{ opacity:.3; transform:scale(1); }
+  50%    { opacity:.9; transform:scale(1.06); }
+}
+.brand-gem svg { width:24px; height:24px; }
+.brand-text { line-height:1; }
+.brand-ar {
+  font-family:'Amiri',serif; font-size:22px; font-weight:700;
+  color: var(--gold-lt); display:block; letter-spacing:.5px;
+}
+.brand-en {
+  font-size:9.5px; letter-spacing:4px; color:var(--teal);
+  display:block; margin-top:2px; font-weight:600; opacity:.85;
+}
+.brand-by {
+  font-family:'Amiri',serif; font-size:13px;
+  color: var(--gold); opacity:.65; display:block; margin-top:1px;
+  letter-spacing:.5px;
+}
+
+.nav-search-box {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 4px 12px;
+  margin-right: auto;
+  margin-left: 24px;
+  max-width: 240px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.nav-search-box:focus-within {
+  border-color: var(--gold);
+  background: rgba(212, 175, 88, 0.05);
+}
+.nav-search-input {
+  background: transparent;
+  border: none;
+  color: var(--platinum);
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  width: 100%;
+  padding-left: 8px;
+}
+.nav-search-btn {
+  background: transparent;
+  border: none;
+  color: var(--gold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-menu { display:flex; align-items:center; gap:8px; list-style:none; }
+.nav-menu a {
+  display:block; padding:9px 16px;
+  color:var(--silver); text-decoration:none; font-size:14px; font-weight:500;
+  border-radius: var(--r);
+  transition: color .25s, background .25s;
+  position:relative;
+}
+.nav-menu a:hover { color:var(--gold-lt); background:rgba(212,175,88,.07); }
+.nav-menu .cta-link {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dk) 100%);
+  color: var(--ink) !important; font-weight:700;
+  box-shadow: 0 4px 20px rgba(212,175,88,.3);
+  transition: transform .2s, box-shadow .2s !important;
+}
+.nav-menu .cta-link:hover {
+  transform:translateY(-2px);
+  box-shadow: 0 8px 32px rgba(212,175,88,.5) !important;
+  background: linear-gradient(135deg, var(--gold-lt) 0%, var(--gold) 100%) !important;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display:grid; grid-template-columns:1fr 420px;
+  align-items:center; gap:60px;
+  padding: 130px 5% 80px;
+  position:relative; overflow:hidden;
+}
+
+.hero-mesh {
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+}
+.mesh-blob {
+  position:absolute; border-radius:50%; filter:blur(100px);
+}
+.blob-1 {
+  width:700px; height:700px;
+  background: radial-gradient(ellipse, rgba(212,175,88,.09) 0%, transparent 65%);
+  top:-200px; right:-150px;
+  animation: drift1 12s ease-in-out infinite;
+}
+.blob-2 {
+  width:500px; height:500px;
+  background: radial-gradient(ellipse, rgba(0,191,166,.06) 0%, transparent 65%);
+  bottom:-100px; left:0;
+  animation: drift2 15s ease-in-out infinite;
+}
+.blob-3 {
+  width:300px; height:300px;
+  background: radial-gradient(ellipse, rgba(212,175,88,.07) 0%, transparent 65%);
+  top:40%; left:40%;
+  animation: drift1 9s 3s ease-in-out infinite;
+}
+@keyframes drift1 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-40px,40px) scale(1.1);} }
+@keyframes drift2 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(30px,-30px);} }
+
+.hero-left { position:relative; z-index:2; }
+
+.hero-pill {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:8px 20px; border-radius:50px; margin-bottom:36px;
+  background: rgba(212,175,88,.08);
+  border: 1px solid rgba(212,175,88,.25);
+  font-size:12.5px; color:var(--gold-lt); font-weight:600;
+  letter-spacing:.5px;
+  animation: rise .8s var(--ease-silk) both;
+}
+.pill-pulse {
+  width:7px; height:7px; border-radius:50%; background:var(--gold);
+  animation: blink-dot 1.6s ease-in-out infinite;
+}
+@keyframes blink-dot { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(212,175,88,.5);} 50%{opacity:.4;box-shadow:0 0 0 6px transparent;} }
+
+.hero-headline {
+  font-family:'Amiri',serif;
+  font-size: clamp(50px,7vw,86px);
+  line-height: 1.1; margin-bottom:6px;
+  animation: rise .85s .08s var(--ease-silk) both;
+}
+.headline-gold {
+  display:block;
+  background: linear-gradient(130deg, var(--gold-lt) 0%, var(--gold) 40%, #B8901E 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  filter: drop-shadow(0 2px 20px rgba(212,175,88,.35));
+}
+.headline-white {
+  display:block; color:var(--platinum);
+  font-size:.5em; letter-spacing:5px; font-weight:400;
+  opacity:.85;
+}
+
+.hero-name {
+  display:inline-flex; align-items:center; gap:12px;
+  margin-bottom:28px;
+  animation: rise .85s .13s var(--ease-silk) both;
+}
+.name-line { width:40px; height:1px; background:var(--teal); opacity:.7; }
+.name-text {
+  font-family:'Amiri',serif; font-size:19px;
+  color:var(--teal); letter-spacing:2px;
+}
+
+.hero-para {
+  font-size:16.5px; line-height:1.95; color:var(--mist);
+  max-width:540px; margin-bottom:46px;
+  animation: rise .85s .18s var(--ease-silk) both;
+}
+
+.hero-actions {
+  display:flex; gap:14px; flex-wrap:wrap;
+  animation: rise .85s .24s var(--ease-silk) both;
+}
+.btn-gold {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:15px 36px; border-radius:var(--r);
+  background: linear-gradient(135deg, var(--gold-lt) 0%, var(--gold) 50%, var(--gold-dk) 100%);
+  color:var(--ink); font-weight:700; font-size:15px; font-family:'Cairo',sans-serif;
+  text-decoration:none; border:none; cursor:pointer;
+  box-shadow: 0 6px 28px rgba(212,175,88,.35), inset 0 1px 0 rgba(255,255,255,.25);
+  transition: transform .25s var(--ease-spring), box-shadow .25s;
+  position:relative; overflow:hidden;
+}
+.btn-gold::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(255,255,255,.15) 0%, transparent 60%);
+  opacity:0; transition:opacity .3s;
+}
+.btn-gold:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(212,175,88,.55); }
+.btn-gold:hover::before { opacity:1; }
+.btn-ghost {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:15px 36px; border-radius:var(--r);
+  background:transparent;
+  border: 1px solid var(--border-hi);
+  color:var(--gold-lt); font-weight:600; font-size:15px; font-family:'Cairo',sans-serif;
+  text-decoration:none; cursor:pointer;
+  transition: background .25s, border-color .25s, transform .25s var(--ease-spring);
+}
+.btn-ghost:hover { background:rgba(212,175,88,.08); border-color:var(--gold); transform:translateY(-3px); }
+
+/* Hero right — floating dashboard */
+.hero-right { position:relative; z-index:2; animation:rise .9s .32s var(--ease-silk) both; }
+.dashboard-card {
+  background: linear-gradient(155deg, rgba(20,25,41,.95) 0%, rgba(11,15,28,.98) 100%);
+  border: 1px solid var(--border);
+  border-radius:var(--r-xl);
+  padding:28px;
+  box-shadow: 0 40px 100px rgba(0,0,0,.5), 0 0 0 1px rgba(212,175,88,.06), inset 0 1px 0 rgba(255,255,255,.04);
+  backdrop-filter:blur(20px);
+}
+.dash-topbar { display:flex; align-items:center; gap:8px; margin-bottom:22px; }
+.dash-dot { width:10px; height:10px; border-radius:50%; }
+.d-red{background:#FF5F57;} .d-ylw{background:#FEBC2E;} .d-grn{background:#28C840;}
+.dash-title { margin-right:auto; font-size:12px; color:var(--silver); letter-spacing:1px; }
+.dash-live { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--teal); }
+.dash-live-dot { width:6px; height:6px; border-radius:50%; background:var(--teal); animation:blink-dot 1.4s infinite; }
+
+.kpi-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:22px; }
+.kpi {
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--r);
+  padding:14px 12px; text-align:center;
+}
+.kpi-val { font-size:22px; font-weight:700; font-family:'Amiri',serif; color:var(--gold-lt); display:block; }
+.kpi-lbl { font-size:10px; color:var(--silver); margin-top:3px; display:block; }
+
+.dash-label { font-size:11px; color:var(--silver); letter-spacing:1.5px; margin-bottom:10px; }
+.progress-item { margin-bottom:12px; }
+.prog-head { display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px; }
+.prog-name { color:var(--platinum); }
+.prog-pct { color:var(--gold); font-weight:600; }
+.prog-track {
+  height:3px; background:rgba(255,255,255,.07); border-radius:2px; overflow:hidden;
+}
+.prog-fill {
+  height:100%; border-radius:2px;
+  background: linear-gradient(90deg, var(--teal) 0%, var(--gold) 100%);
+  box-shadow: 0 0 8px rgba(212,175,88,.4);
+  animation: fill-in 1.5s var(--ease-silk) both;
+}
+@keyframes fill-in { from{width:0!important;} }
+
+.activity-row {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 0; border-top:1px solid rgba(255,255,255,.05);
+  font-size:12px;
+}
+.act-icon { font-size:18px; }
+.act-text { flex:1; color:var(--silver); }
+.act-val { color:var(--gold); font-weight:700; }
+
+/* ═══════════════════════════════════════════
+   STATS RIBBON
+═══════════════════════════════════════════ */
+.stats-ribbon {
+  position:relative; z-index:2;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:rgba(11,15,28,.6);
+  backdrop-filter:blur(20px);
+  padding:48px 5%;
+}
+.stats-inner {
+  max-width:1100px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(4,1fr);
+}
+.stat-cell {
+  text-align:center; padding:0 20px;
+  position:relative;
+}
+.stat-cell:not(:last-child)::after {
+  content:''; position:absolute; top:20%; right:0;
+  width:1px; height:60%;
+  background: linear-gradient(180deg, transparent, var(--border-hi), transparent);
+}
+.stat-num {
+  font-family:'Amiri',serif;
+  font-size:52px; font-weight:700; line-height:1;
+  background: linear-gradient(130deg, var(--gold-lt), var(--gold));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  display:block; margin-bottom:8px;
+}
+.stat-text { font-size:14px; color:var(--silver); }
+
+/* ═══════════════════════════════════════════
+   SECTION COMMON
+═══════════════════════════════════════════ */
+.section-eyebrow {
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:11.5px; letter-spacing:3px; font-weight:700;
+  color:var(--gold); text-transform:uppercase; margin-bottom:14px;
+}
+.eyebrow-line { width:30px; height:1px; background:var(--gold); opacity:.6; }
+.section-h2 {
+  font-family:'Amiri',serif;
+  font-size:clamp(32px,5vw,52px); line-height:1.2; margin-bottom:16px;
+}
+.section-lead { font-size:16px; color:var(--mist); line-height:1.85; max-width:560px; }
+.gold-rule { width:56px; height:2px; background:linear-gradient(90deg,var(--gold),transparent); border-radius:2px; margin:18px 0; }
+
+/* ═══════════════════════════════════════════
+   PLATFORMS
+═══════════════════════════════════════════ */
+.platforms { padding:110px 5%; position:relative; z-index:2; }
+.platforms-head { text-align:center; margin-bottom:72px; }
+.platforms-head .section-lead { margin:0 auto; }
+.platforms-head .gold-rule { margin:18px auto; }
+
+.platforms-duo {
+  max-width:1180px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr; gap:28px;
+}
+.dynamic-platforms-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 28px;
+}
+.custom-platform-card {
+  border-radius:var(--r-xl);
+  position:relative;
+  overflow:hidden;
+  transition: transform .45s var(--ease-silk), box-shadow .45s;
+  background: linear-gradient(165deg, #0C1A30 0%, #061020 100%);
+  border:1px solid rgba(0,191,166,.18);
+  box-shadow:0 24px 70px rgba(0,0,0,.4);
+}
+.custom-platform-card:hover { transform:translateY(-10px); }
+
+.p-card {
+  border-radius:var(--r-xl);
+  position:relative; overflow:hidden;
+  min-height:560px;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  transition: transform .45s var(--ease-silk), box-shadow .45s;
+}
+.p-card:hover { transform:translateY(-10px); }
+
+.edu-card {
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 20%, rgba(0,191,166,.1) 0%, transparent 60%),
+    linear-gradient(165deg, #0C1A30 0%, #061020 100%);
+  border:1px solid rgba(0,191,166,.18);
+  box-shadow:0 24px 70px rgba(0,0,0,.4);
+}
+.edu-card:hover { box-shadow:0 40px 90px rgba(0,191,166,.15), 0 0 0 1px rgba(0,191,166,.35); }
+
+.shop-card {
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 20%, rgba(212,175,88,.1) 0%, transparent 60%),
+    linear-gradient(165deg, #1C1200 0%, #100B00 100%);
+  border:1px solid rgba(212,175,88,.18);
+  box-shadow:0 24px 70px rgba(0,0,0,.4);
+}
+.shop-card:hover { box-shadow:0 40px 90px rgba(212,175,88,.2), 0 0 0 1px rgba(212,175,88,.4); }
+
+.card-geo {
+  position:absolute; inset:0; pointer-events:none; overflow:hidden;
+}
+.edu-card .card-geo::before {
+  content:'';
+  position:absolute; width:380px; height:380px;
+  border:1px solid rgba(0,191,166,.08);
+  border-radius:50%; top:-80px; right:-80px;
+}
+.edu-card .card-geo::after {
+  content:'';
+  position:absolute; width:220px; height:220px;
+  border:1px solid rgba(0,191,166,.06);
+  border-radius:50%; top:40px; right:60px;
+}
+.shop-card .card-geo::before {
+  content:'';
+  position:absolute; width:380px; height:380px;
+  border:1px solid rgba(212,175,88,.07);
+  border-radius:50%; top:-80px; left:-80px;
+}
+.shop-card .card-geo::after {
+  content:'';
+  position:absolute; width:220px; height:220px;
+  border:1px solid rgba(212,175,88,.05);
+  border-radius:50%; top:40px; left:60px;
+}
+
+.card-mock {
+  position:absolute; top:32px;
+  width:280px;
+}
+.edu-card .card-mock { right:28px; }
+.shop-card .card-mock { left:28px; }
+
+.mock-window {
+  background:rgba(6,8,15,.75);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px; padding:16px;
+  backdrop-filter:blur(12px);
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+.mock-bar { display:flex; gap:5px; margin-bottom:14px; }
+.mb { width:9px; height:9px; border-radius:50%; }
+.mb-r{background:#FF5F57;} .mb-y{background:#FEBC2E;} .mb-g{background:#28C840;}
+
+.lesson-row {
+  display:flex; align-items:center; gap:10px; padding:8px;
+  border-radius:8px; margin-bottom:6px;
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.05);
+  transition:background .25s;
+}
+.lesson-row:first-of-type { background:rgba(0,191,166,.1); border-color:rgba(0,191,166,.2); }
+.lesson-thumb {
+  width:32px; height:32px; border-radius:7px;
+  display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0;
+}
+.lesson-body { flex:1; min-width:0; }
+.lesson-title { font-size:11px; color:var(--platinum); margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.prog-mini { height:2px; background:rgba(255,255,255,.08); border-radius:1px; }
+.prog-mini-fill { height:100%; border-radius:1px; background:linear-gradient(90deg,var(--teal),#00E8CC); }
+.lesson-pct { font-size:10px; color:var(--teal); font-weight:700; }
+
+.product-grid-mini {
+  display:grid; grid-template-columns:1fr 1fr; gap:8px;
+}
+.prod-mini {
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.05);
+  border-radius:9px; overflow:hidden;
+}
+.prod-thumb {
+  height:60px; display:flex; align-items:center; justify-content:center; font-size:24px;
+}
+.prod-info { padding:7px 8px; }
+.prod-name { font-size:10px; color:var(--silver); margin-bottom:3px; }
+.prod-price { font-size:12px; font-weight:700; color:var(--gold); }
+
+.card-body {
+  position:relative; z-index:2; padding:36px;
+  background:linear-gradient(0deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.1) 100%);
+}
+.card-eyebrow {
+  font-size:10.5px; letter-spacing:4px; font-weight:700;
+  text-transform:uppercase; margin-bottom:10px;
+}
+.edu-card .card-eyebrow { color:var(--teal); }
+.shop-card .card-eyebrow { color:var(--gold); }
+
+.card-h3 { font-family:'Amiri',serif; font-size:34px; font-weight:700; margin-bottom:12px; line-height:1.2; }
+.card-desc { font-size:14px; color:var(--mist); line-height:1.85; margin-bottom:22px; }
+
+.card-feats { list-style:none; margin-bottom:28px; }
+.card-feats li {
+  display:flex; align-items:flex-start; gap:10px;
+  font-size:13.5px; color:rgba(232,228,220,.8);
+  padding:7px 0; border-bottom:1px solid rgba(255,255,255,.05);
+}
+.card-feats li:last-child { border-bottom:none; }
+.feat-check {
+  width:18px; height:18px; border-radius:5px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:9px; margin-top:1px;
+}
+.edu-card .feat-check { background:rgba(0,191,166,.15); color:var(--teal); border:1px solid rgba(0,191,166,.25); }
+.shop-card .feat-check { background:rgba(212,175,88,.12); color:var(--gold); border:1px solid rgba(212,175,88,.25); }
+
+.card-cta {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:13px 28px; border-radius:var(--r);
+  font-family:'Cairo',sans-serif; font-weight:700; font-size:14px;
+  text-decoration:none; cursor:pointer; border:none;
+  transition: transform .25s var(--ease-spring), box-shadow .25s;
+}
+.edu-card .card-cta {
+  background:rgba(0,191,166,.12); border:1.5px solid rgba(0,191,166,.35); color:var(--teal);
+}
+.edu-card .card-cta:hover { background:rgba(0,191,166,.22); transform:translateX(-5px); }
+.shop-card .card-cta {
+  background:linear-gradient(135deg,var(--gold-lt),var(--gold)); color:var(--ink);
+  box-shadow:0 6px 22px rgba(212,175,88,.3);
+}
+.shop-card .card-cta:hover { transform:translateX(-5px); box-shadow:0 12px 36px rgba(212,175,88,.5); }
+
+/* ═══════════════════════════════════════════
+   FEATURES SECTION
+═══════════════════════════════════════════ */
+.features {
+  padding:110px 5%; position:relative; z-index:2;
+  background: linear-gradient(180deg, transparent 0%, rgba(11,15,28,.5) 50%, transparent 100%);
+}
+.features-wrap { max-width:1150px; margin:0 auto; }
+.features-header { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; margin-bottom:80px; }
+.metrics-quad { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.metric-box {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--r-lg); padding:24px;
+  text-align:center; transition:border-color .3s, transform .3s;
+}
+.metric-box:hover { border-color:var(--border-hi); transform:translateY(-4px); }
+.metric-icon { font-size:28px; margin-bottom:10px; display:block; }
+.metric-val { font-family:'Amiri',serif; font-size:30px; font-weight:700; display:block; }
+.metric-lbl { font-size:12px; color:var(--silver); margin-top:4px; display:block; }
+.metric-box:nth-child(1) .metric-val { color:var(--gold-lt); }
+.metric-box:nth-child(2) .metric-val { color:var(--teal); }
+.metric-box:nth-child(3) .metric-val { color:var(--gold-lt); }
+.metric-box:nth-child(4) .metric-val { color:var(--teal); }
+
+.feats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.feat-tile {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--r-lg); padding:30px 26px;
+  transition: all .35s var(--ease-silk);
+  position:relative; overflow:hidden;
+}
+.feat-tile::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(212,175,88,.04) 0%, transparent 60%);
+  opacity:0; transition:opacity .35s;
+}
+.feat-tile:hover { border-color:rgba(212,175,88,.3); transform:translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,.35); }
+.feat-tile:hover::before { opacity:1; }
+.ft-icon-wrap {
+  width:52px; height:52px; border-radius:14px; margin-bottom:18px;
+  display:flex; align-items:center; justify-content:center; font-size:24px;
+  background:rgba(212,175,88,.08); border:1px solid rgba(212,175,88,.15);
+}
+.feat-tile:nth-child(even) .ft-icon-wrap { background:var(--teal-dim); border-color:rgba(0,191,166,.2); }
+.ft-h4 { font-size:17px; font-weight:700; margin-bottom:9px; color:var(--platinum); }
+.ft-p { font-size:13.5px; color:var(--silver); line-height:1.75; }
+
+/* ═══════════════════════════════════════════
+   ALL OTHER SERVICES SECTION (مع الأسعار)
+═══════════════════════════════════════════ */
+.other-services {
+  padding: 100px 5%;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(11,15,28,.3) 0%, transparent 100%);
+}
+.services-grid {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.service-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 36px 28px;
+  transition: all 0.4s var(--ease-silk);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(212,175,88,0.05) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+.service-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-hi);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.4);
+}
+.service-card:hover::before { opacity: 1; }
+.service-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, rgba(212,175,88,0.12), rgba(0,191,166,0.08));
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 36px;
+  border: 1px solid rgba(212,175,88,0.2);
+  transition: transform 0.3s;
+}
+.service-card:hover .service-icon { transform: scale(1.05); }
+.service-title {
+  font-family: 'Amiri', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold-lt);
+  margin-bottom: 14px;
+}
+.service-desc {
+  font-size: 14px;
+  color: var(--mist);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.service-price {
+  font-size: 28px;
+  font-family: 'Amiri', serif;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.service-price small {
+  font-size: 14px;
+  font-family: 'Cairo', sans-serif;
+  color: var(--silver);
+}
+.service-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: var(--r);
+  transition: all 0.25s;
+  box-shadow: 0 4px 12px rgba(212,175,88,0.2);
+}
+.service-link:hover {
+  gap: 12px;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(212,175,88,0.4);
+}
+@media(max-width: 992px) {
+  .services-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media(max-width: 640px) {
+  .services-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   PRICING
+═══════════════════════════════════════════ */
+.pricing { padding:110px 5%; position:relative; z-index:2; }
+.pricing-head { text-align:center; margin-bottom:68px; }
+.pricing-head .section-lead { margin:0 auto; }
+.pricing-head .gold-rule { margin:18px auto; }
+
+.pricing-grid {
+  max-width:1020px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+  align-items:start;
+}
+.price-tile {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--r-xl); padding:38px 32px;
+  position:relative; overflow:hidden;
+  transition:transform .35s var(--ease-silk), box-shadow .35s;
+}
+.price-tile:hover { transform:translateY(-8px); box-shadow:0 24px 60px rgba(0,0,0,.4); }
+
+.price-tile.featured {
+  background: linear-gradient(155deg, #1A1600 0%, #0E1200 100%);
+  border-color:var(--gold);
+  box-shadow:0 0 50px rgba(212,175,88,.12);
+}
+.price-tile.featured:hover { box-shadow:0 30px 70px rgba(212,175,88,.22); }
+
+.featured-ribbon {
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  background:linear-gradient(90deg,var(--gold-lt),var(--gold));
+  color:var(--ink); font-size:10.5px; font-weight:800; letter-spacing:1px;
+  padding:6px 22px; border-radius:0 0 12px 12px;
+  box-shadow:0 4px 14px rgba(212,175,88,.35);
+}
+
+.price-plan { font-size:12px; letter-spacing:3px; color:var(--gold); font-weight:700; margin-bottom:18px; }
+.price-wrap { display:flex; align-items:flex-start; gap:4px; margin-bottom:4px; }
+.price-cur { font-size:22px; color:var(--gold); margin-top:12px; }
+.price-num { font-family:'Amiri',serif; font-size:58px; font-weight:700; line-height:1; color:var(--platinum); }
+.price-mo { font-size:14px; color:var(--silver); margin-bottom:28px; }
+.price-feats { list-style:none; margin-bottom:32px; }
+.price-feats li {
+  display:flex; align-items:center; gap:9px;
+  font-size:13.5px; padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.05); color:rgba(232,228,220,.82);
+}
+.price-feats li:last-child { border-bottom:none; }
+.pf-icon { color:var(--gold); font-size:10px; }
+
+/* ═══════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════ */
+.testimonials {
+  padding:110px 5%; position:relative; z-index:2;
+  background:linear-gradient(180deg, transparent, rgba(20,25,41,.4), transparent);
+}
+.testimonials-head { text-align:center; margin-bottom:68px; }
+.test-grid {
+  max-width:1150px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+}
+.test-tile {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--r-xl); padding:32px;
+  transition:all .35s var(--ease-silk); position:relative; overflow:hidden;
+}
+.test-tile::after {
+  content:''; position:absolute; top:16px; left:24px;
+  font-family:'Playfair Display',serif; font-size:80px; color:var(--gold);
+  opacity:.07; line-height:1; pointer-events:none;
+}
+.test-tile:hover { border-color:rgba(212,175,88,.28); transform:translateY(-5px); box-shadow:0 18px 50px rgba(0,0,0,.35); }
+.test-stars { color:var(--gold); letter-spacing:4px; font-size:14px; margin-bottom:16px; }
+.test-quote { font-size:14.5px; color:var(--mist); line-height:1.9; margin-bottom:22px; font-style:italic; }
+.test-author { display:flex; align-items:center; gap:13px; }
+.test-ava {
+  width:46px; height:46px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Amiri',serif; font-size:20px; font-weight:700;
+  border:1.5px solid rgba(212,175,88,.3); color:var(--gold-lt);
+  background:linear-gradient(135deg,rgba(212,175,88,.12),rgba(11,15,28,.9));
+  flex-shrink:0;
+}
+.test-name { font-size:14px; font-weight:700; color:var(--platinum); }
+.test-role { font-size:12px; color:var(--silver); margin-top:2px; }
+
+/* ═══════════════════════════════════════════
+   CTA SECTION
+═══════════════════════════════════════════ */
+.cta-section { padding:110px 5%; text-align:center; position:relative; z-index:2; }
+.cta-inner {
+  max-width:780px; margin:0 auto; position:relative;
+  background:linear-gradient(155deg,rgba(20,25,41,.7) 0%,rgba(11,15,28,.9) 100%);
+  border:1px solid var(--border);
+  border-radius:32px; padding:80px 56px;
+  overflow:hidden;
+}
+.cta-inner::before {
+  content:''; position:absolute; top:-120px; left:50%; transform:translateX(-50%);
+  width:500px; height:350px;
+  background:radial-gradient(ellipse, rgba(212,175,88,.1) 0%, transparent 65%);
+  pointer-events:none;
+}
+.cta-inner::after {
+  content:''; position:absolute; bottom:-80px; right:-80px;
+  width:300px; height:300px;
+  background:radial-gradient(ellipse, rgba(0,191,166,.07) 0%, transparent 65%);
+  pointer-events:none;
+}
+.cta-h2 { font-family:'Amiri',serif; font-size:52px; margin-bottom:18px; line-height:1.2; }
+.cta-sub { font-size:17px; color:var(--mist); margin-bottom:38px; }
+.cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.cta-note { font-size:13px; color:var(--silver); margin-top:22px; }
+.cta-note span { color:var(--teal); }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background:rgba(6,8,15,.95);
+  border-top:1px solid var(--border);
+  padding:70px 5% 32px; position:relative; z-index:2;
+}
+.footer-grid {
+  max-width:1200px; margin:0 auto 56px;
+  display:grid; grid-template-columns:2.2fr 1fr 1fr 1fr; gap:64px;
+}
+.footer-brand-blurb { font-size:14px; color:var(--silver); line-height:1.85; margin-top:18px; }
+.footer-col h5 { font-size:14px; font-weight:700; color:var(--gold-lt); margin-bottom:20px; letter-spacing:.5px; }
+.footer-col ul { list-style:none; }
+.footer-col li { margin-bottom:11px; }
+.footer-col a { color:var(--silver); text-decoration:none; font-size:13.5px; transition:color .25s; }
+.footer-col a:hover { color:var(--gold); }
+.footer-bottom {
+  max-width:1200px; margin:0 auto;
+  display:flex; justify-content:space-between; align-items:center;
+  border-top:1px solid rgba(212,175,88,.07); padding-top:26px;
+  font-size:13px; color:var(--silver);
+}
+.footer-bottom b { font-family:'Amiri',serif; color:var(--gold); font-size:15px; }
+
+/* ═══════════════════════════════════════════
+   REVEAL ANIMATION
+═══════════════════════════════════════════ */
+@keyframes rise { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
+
+.reveal { opacity:0; transform:translateY(32px); transition:opacity .75s var(--ease-silk), transform .75s var(--ease-silk); }
+.reveal.in { opacity:1; transform:translateY(0); }
+.reveal-left { opacity:0; transform:translateX(30px); transition:opacity .75s var(--ease-silk), transform .75s var(--ease-silk); }
+.reveal-left.in { opacity:1; transform:translateX(0); }
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════ */
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--ink); }
+::-webkit-scrollbar-thumb { background:var(--gold-dk); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--gold); }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:1024px){
+  .hero { grid-template-columns:1fr; }
+  .hero-right { display:none; }
+  .platforms-duo, .features-header, .pricing-grid,
+  .test-grid, .stats-inner, .footer-grid { grid-template-columns:1fr; }
+  .feats-grid { grid-template-columns:1fr 1fr; }
+  .nav-search-box { max-width:160px; margin-left:12px; }
+}
+@media(max-width:640px){
+  .feats-grid { grid-template-columns:1fr; }
+  .kpi-row { grid-template-columns:1fr 1fr; }
+  .nav-menu, .nav-search-box { display:none; }
+}
+
+/* ═══════════════════════════════════════════
+   SECRET SETTINGS SYSTEM & MODALS
+═══════════════════════════════════════════ */
+.secret-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(4, 6, 12, 0.92);
+  backdrop-filter: blur(16px);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s var(--ease-silk);
+}
+.secret-modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+.secret-card {
+  background: linear-gradient(155deg, rgba(20,25,41,0.98) 0%, rgba(11,15,28,1) 100%);
+  border: 1px solid var(--gold);
+  box-shadow: 0 0 50px rgba(212,175,88,0.25);
+  border-radius: var(--r-xl);
+  width: 90%; max-width: 680px; padding: 36px;
+  position: relative;
+  transform: translateY(30px);
+  transition: transform 0.4s var(--ease-spring);
+}
+.secret-modal-overlay.active .secret-card { transform: translateY(0); }
+
+.secret-close {
+  position: absolute; top: 20px; left: 20px;
+  background: transparent; border: none; color: var(--silver);
+  font-size: 20px; cursor: pointer; transition: color 0.2s;
+}
+.secret-close:hover { color: var(--gold-lt); }
+
+.secret-auth-view { display: block; text-align: center; }
+.secret-dashboard-view { display: none; }
+
+.secret-title { font-family: 'Amiri', serif; font-size: 28px; color: var(--gold-lt); margin-bottom: 8px; }
+.secret-subtitle { font-size: 13px; color: var(--silver); margin-bottom: 24px; }
+
+.secret-input-wrap {
+  max-width: 300px; margin: 0 auto 16px;
+}
+.secret-input {
+  width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border); border-radius: var(--r);
+  color: var(--platinum); font-family: 'Cairo', sans-serif; text-align: center;
+  font-size: 14px; letter-spacing: 2px; transition: border-color 0.3s;
+}
+.secret-input:focus { border-color: var(--gold); }
+.secret-err-msg { color: #FF5F57; font-size: 12px; margin-top: 8px; display: none; }
+
+.secret-tabs-nav {
+  display: flex; gap: 8px; border-bottom: 1px solid var(--border);
+  padding-bottom: 12px; margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.secret-tab-btn {
+  background: transparent; border: none; color: var(--silver);
+  padding: 8px 16px; font-family: 'Cairo', sans-serif; font-size: 13px;
+  cursor: pointer; border-radius: var(--r); transition: all 0.25s;
+}
+.secret-tab-btn.active {
+  background: rgba(212,175,88,0.12); color: var(--gold-lt); font-weight: 600;
+}
+
+.secret-tab-content { display: none; }
+.secret-tab-content.active { display: block; }
+
+.secret-list-item {
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+  padding: 12px 16px; border-radius: var(--r); margin-bottom: 10px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  font-size: 13px;
+}
+.secret-btn-action {
+  padding: 6px 14px; font-family: 'Cairo', sans-serif; font-size: 12px;
+  border-radius: var(--r); cursor: pointer; border: none;
+}
+.btn-act-add { background: var(--teal); color: var(--ink); font-weight: 600; }
+.btn-act-del { background: rgba(255,95,87,0.15); color: #FF5F57; border: 1px solid rgba(255,95,87,0.3); }
+.btn-act-del:hover { background: rgba(255,95,87,0.25); }
+
+.log-status-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--teal);
+  display: inline-block; margin-left: 8px;
+}
+.customer-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(4, 6, 12, 0.94);
+  backdrop-filter: blur(16px);
+  z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s var(--ease-silk);
+}
+.customer-modal-overlay.active { opacity: 1; pointer-events: auto; }
+.customer-card {
+  background: linear-gradient(155deg, rgba(20,25,41,1) 0%, rgba(11,15,28,1) 100%);
+  border: 1px solid var(--gold);
+  border-radius: var(--r-xl);
+  width: 90%; max-width: 450px; padding: 36px;
+  text-align: center;
+  transform: translateY(30px);
+  transition: transform 0.4s var(--ease-spring);
+}
+.customer-modal-overlay.active .customer-card { transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="brand-gem"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C9.5 2 8 4.5 8 7c0 2 1 3.5 2.5 4.5C8 12.5 6 15 6 18c0 3 2.5 4 4 4h4c1.5 0 4-1 4-4 0-3-2-5.5-4.5-6.5C14.5 10.5 16 9 16 7c0-2.5-1.5-5-4-5z" fill="#06080F" stroke="#06080F" stroke-width=".5"/><path d="M12 3.5c-1.7 0-2.8 2-2.8 3.5 0 1.5.8 2.8 2 3.5-2.2 1-3.7 3-3.7 5.5 0 2.2 1.8 3.2 3.2 3.2h2.6c1.4 0 3.2-1 3.2-3.2 0-2.5-1.5-4.5-3.7-5.5 1.2-.7 2-2 2-3.5 0-1.5-1.1-3.5-2.8-3.5z" fill="#D4AF58"/></svg></div>
+      <div class="brand-text"><span class="brand-ar">منصة نيوتن</span><span class="brand-en">NEWTON PLATFORM</span><span class="brand-by">محمد أمين</span></div>
+  </a>
+  <div class="nav-search-box"><input type="text" class="nav-search-input" id="navSearchInput" placeholder="ابحث في المنصة..."><button class="nav-search-btn" onclick="handleSecretSearch()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg></button></div>
+  <ul class="nav-menu"><li><a href="#platforms">المنصات</a></li><li><a href="#features">المميزات</a></li><li><a href="#services">جميع الخدمات</a></li><li><a href="#pricing">الأسعار</a></li><li><a href="#testimonials">العملاء</a></li><li><a href="#cta" class="cta-link">ابدأ مجانًا</a></li></ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-mesh"><div class="mesh-blob blob-1"></div><div class="mesh-blob blob-2"></div><div class="mesh-blob blob-3"></div></div>
+  <div class="hero-left">
+    <div class="hero-pill"><span class="pill-pulse"></span>المنصة الرقمية الأولى في العالم العربي</div>
+    <h1 class="hero-headline"><span class="headline-gold">نيوتن</span><span class="headline-white">منصة تصميم المواقع</span></h1>
+    <div class="hero-name"><span class="name-line"></span><span class="name-text">محمد أمين</span></div>
+    <p class="hero-para">أطلق عنان إبداعك الرقمي مع منصة نيوتن — النظام المتكامل الذي يجمع بين أدوات التعليم الإلكتروني وقوة التجارة الرقمية في بيئة واحدة سلسة وبالغة الاحترافية.</p>
+    <div class="hero-actions"><a href="#platforms" class="btn-gold"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 5l7 7-7 7M5 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>اكتشف المنصات</a><a href="#cta" class="btn-ghost">جرّب مجانًا — 14 يومًا</a><button class="btn-ghost" onclick="openCustomerLoginModal()" style="background:rgba(212,175,88,.08);">🔐 تسجيل دخول العملاء</button></div>
+  </div>
+  <div class="hero-right"><div class="dashboard-card"><div class="dash-topbar"><span class="dash-dot d-red"></span><span class="dash-dot d-ylw"></span><span class="dash-dot d-grn"></span><span class="dash-title">لوحة التحكم</span><span class="dash-live"><span class="dash-live-dot"></span>مباشر</span></div><div class="kpi-row"><div class="kpi"><span class="kpi-val">12.4K</span><span class="kpi-lbl">المستخدمون</span></div><div class="kpi"><span class="kpi-val">3.2K$</span><span class="kpi-lbl">المبيعات</span></div><div class="kpi"><span class="kpi-val">96%</span><span class="kpi-lbl">الرضا</span></div></div><div class="dash-label">تقدم الدورات الحالية</div><div class="progress-item"><div class="prog-head"><span class="prog-name">تصميم واجهات المستخدم</span><span class="prog-pct">75%</span></div><div class="prog-track"><div class="prog-fill" style="width:75%"></div></div></div><div class="progress-item"><div class="prog-head"><span class="prog-name">برمجة الويب المتقدمة</span><span class="prog-pct">42%</span></div><div class="prog-track"><div class="prog-fill" style="width:42%"></div></div></div><div class="progress-item"><div class="prog-head"><span class="prog-name">التسويق الرقمي</span><span class="prog-pct">88%</span></div><div class="prog-track"><div class="prog-fill" style="width:88%"></div></div></div><div class="activity-row"><span class="act-icon">📦</span><span class="act-text">طلب جديد — قالب احترافي</span><span class="act-val">49$</span></div><div class="activity-row"><span class="act-icon">🎓</span><span class="act-text">تسجيل جديد — UX Design</span><span class="act-val">+1</span></div><div class="activity-row"><span class="act-icon">⭐</span><span class="act-text">تقييم 5 نجوم من أحمد</span><span class="act-val">★★★★★</span></div></div></div>
+</section>
+
+<div class="stats-ribbon"><div class="stats-inner"><div class="stat-cell reveal"><span class="stat-num" data-target="50000" data-suffix="K+">—</span><span class="stat-text">مستخدم نشط</span></div><div class="stat-cell reveal"><span class="stat-num" data-target="3200" data-suffix="+">—</span><span class="stat-text">موقع مُنشأ</span></div><div class="stat-cell reveal"><span class="stat-num">98%</span><span class="stat-text">معدل رضا العملاء</span></div><div class="stat-cell reveal"><span class="stat-num">24/7</span><span class="stat-text">دعم فني متواصل</span></div></div></div>
+
+<section class="platforms" id="platforms">
+  <div class="platforms-head reveal"><div class="section-eyebrow"><span class="eyebrow-line"></span>منصاتنا المتخصصة<span class="eyebrow-line"></span></div><h2 class="section-h2">نظامان متكاملان — رؤية واحدة</h2><div class="gold-rule"></div><p class="section-lead">اختر المسار الذي يخدم أهدافك أو ادمجهما معًا في تجربة رقمية متكاملة لا مثيل لها</p></div>
+  <div class="platforms-duo" id="staticPlatforms">
+    <div class="p-card edu-card reveal"><div class="card-geo"></div><div class="card-mock"><div class="mock-window"><div class="mock-bar"><span class="mb mb-r"></span><span class="mb mb-y"></span><span class="mb mb-g"></span></div><div class="lesson-row"><div class="lesson-thumb" style="background:rgba(0,191,166,.15);">🎨</div><div class="lesson-body"><div class="lesson-title">تصميم واجهات المستخدم</div><div class="prog-mini"><div class="prog-mini-fill" style="width:75%"></div></div></div><span class="lesson-pct">75%</span></div><div class="lesson-row"><div class="lesson-thumb" style="background:rgba(0,120,150,.15);">💻</div><div class="lesson-body"><div class="lesson-title">برمجة الويب المتقدمة</div><div class="prog-mini"><div class="prog-mini-fill" style="width:42%"></div></div></div><span class="lesson-pct">42%</span></div><div class="lesson-row"><div class="lesson-thumb" style="background:rgba(100,0,191,.1);">📊</div><div class="lesson-body"><div class="lesson-title">التسويق الرقمي</div><div class="prog-mini"><div class="prog-mini-fill" style="width:88%"></div></div></div><span class="lesson-pct">88%</span></div></div></div><div class="card-body"><div class="card-eyebrow">المنصة التعليمية</div><h3 class="card-h3">نيوتن للتعلّم</h3><p class="card-desc">منظومة تعليمية متكاملة تمنحك القدرة على إنشاء بيئة تعليمية رقمية احترافية تفاعلية مع تتبع تقدم المتعلمين بدقة متناهية.</p><ul class="card-feats"><li><span class="feat-check">✓</span>إنشاء دورات ومحتوى تعليمي غير محدود</li><li><span class="feat-check">✓</span>اختبارات تفاعلية وشهادات رسمية ذكية</li><li><span class="feat-check">✓</span>بث مباشر وفيديو عالي الدقة المدمج</li><li><span class="feat-check">✓</span>لوحة تحليل أداء المتعلمين في الوقت الفعلي</li></ul><a href="#" class="card-cta">اكتشف المنصة التعليمية <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div>
+    <div class="p-card shop-card reveal"><div class="card-geo"></div><div class="card-mock"><div class="mock-window"><div class="mock-bar"><span class="mb mb-r"></span><span class="mb mb-y"></span><span class="mb mb-g"></span></div><div style="font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;">المنتجات المميزة</div><div class="product-grid-mini"><div class="prod-mini"><div class="prod-thumb" style="background:rgba(212,175,88,.07);">🖥️</div><div class="prod-info"><div class="prod-name">قالب احترافي</div><div class="prod-price">49$</div></div></div><div class="prod-mini"><div class="prod-thumb" style="background:rgba(0,191,166,.07);">📱</div><div class="prod-info"><div class="prod-name">تطبيق جوال</div><div class="prod-price">89$</div></div></div><div class="prod-mini"><div class="prod-thumb" style="background:rgba(150,0,191,.07);">🎨</div><div class="prod-info"><div class="prod-name">حزمة تصميم</div><div class="prod-price">129$</div></div></div><div class="prod-mini"><div class="prod-thumb" style="background:rgba(212,100,.07);">⚙️</div><div class="prod-info"><div class="prod-name">إضافات متقدمة</div><div class="prod-price">35$</div></div></div></div></div></div><div class="card-body"><div class="card-eyebrow">المنصة التجارية</div><h3 class="card-h3">نيوتن للتجارة</h3><p class="card-desc">بنية تجارية إلكترونية متطورة تمنحك القدرة الكاملة لبناء متجرك الرقمي وإدارته وتنمية مبيعاتك بأدوات ذكية ودقيقة.</p><ul class="card-feats"><li><span class="feat-check">✓</span>متجر إلكتروني متكامل يُنشأ في دقائق</li><li><span class="feat-check">✓</span>بوابات دفع متعددة وآمنة بالكامل</li><li><span class="feat-check">✓</span>نظام إدارة المخزون والطلبات الذكي</li><li><span class="feat-check">✓</span>تحليلات مبيعات عميقة ولوحة تقارير ذكية</li></ul><a href="#" class="card-cta">استكشف المتجر الإلكتروني <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div>
+  </div>
+  <div id="dynamicPlatformsContainer" class="dynamic-platforms-grid"></div>
+</section>
+
+<section class="features" id="features">
+  <div class="features-wrap"><div class="features-header"><div class="reveal"><div class="section-eyebrow"><span class="eyebrow-line"></span>لماذا نيوتن؟</div><h2 class="section-h2">مميزات تضعك<br>في مقدمة المشهد</h2><div class="gold-rule"></div><p class="section-lead">تقنيات متقدمة وأدوات مدروسة بدقة تجعل كل خطوة نحو نجاحك الرقمي أسهل وأسرع وأجمل مما تتخيل.</p></div><div class="metrics-quad reveal"><div class="metric-box"><span class="metric-icon">⚡</span><span class="metric-val">3×</span><span class="metric-lbl">سرعة الإنشاء</span></div><div class="metric-box"><span class="metric-icon">🏆</span><span class="metric-val">A+</span><span class="metric-lbl">جودة الكود</span></div><div class="metric-box"><span class="metric-icon">🌐</span><span class="metric-val">99.9%</span><span class="metric-lbl">uptime مضمون</span></div><div class="metric-box"><span class="metric-icon">🔒</span><span class="metric-val">SSL</span><span class="metric-lbl">حماية فائقة</span></div></div></div><div class="feats-grid"><div class="feat-tile reveal"><div class="ft-icon-wrap">🎨</div><h4 class="ft-h4">محرر بدون كود</h4><p class="ft-p">تصميم سحب وإفلات متطور يتيح بناء مواقع مذهلة دون الحاجة لأي خبرة برمجية — الإبداع بلا قيود.</p></div><div class="feat-tile reveal"><div class="ft-icon-wrap">🤖</div><h4 class="ft-h4">ذكاء اصطناعي مدمج</h4><p class="ft-p">أدوات ذكاء اصطناعي تُنشئ المحتوى والصور وتحسّن تجربة المستخدم تلقائيًا بناءً على بيانات حقيقية.</p></div><div class="feat-tile reveal"><div class="ft-icon-wrap">📱</div><h4 class="ft-h4">تجاوب تام 100%</h4><p class="ft-p">جميع قوالبنا مُحسّنة لكل الشاشات تلقائيًا — من الجوال إلى الشاشات العملاقة بدقة لا تشوبها شائبة.</p></div><div class="feat-tile reveal"><div class="ft-icon-wrap">🔍</div><h4 class="ft-h4">تحسين SEO متقدم</h4><p class="ft-p">أدوات تحسين محركات البحث المدمجة تضمن وصول موقعك لأعلى نتائج جوجل بخوارزميات متجددة.</p></div><div class="feat-tile reveal"><div class="ft-icon-wrap">📊</div><h4 class="ft-h4">تحليلات عميقة</h4><p class="ft-p">لوحة بيانات شاملة بتحليلات حقيقية عن سلوك الزوار والمبيعات لاتخاذ قرارات مدروسة ودقيقة.</p></div><div class="feat-tile reveal"><div class="ft-icon-wrap">🚀</div><h4 class="ft-h4">أداء استثنائي</h4><p class="ft-p">بنية سحابية عالية الأداء مع CDN عالمي يضمن سرعة تحميل خاطفة لموقعك من أي مكان في العالم.</p></div></div></div>
+</section>
+
+<!-- ================= SECTION: ALL OTHER SERVICES WITH PRICES ================= -->
+<section class="other-services" id="services">
+  <div class="platforms-head reveal">
+    <div class="section-eyebrow"><span class="eyebrow-line"></span>جميع الخدمات الرقمية<span class="eyebrow-line"></span></div>
+    <h2 class="section-h2">خدمات متكاملة لنجاح أعمالك</h2>
+    <div class="gold-rule" style="margin: 18px auto;"></div>
+    <p class="section-lead">بخلاف التجارة والتعليم، نقدم لك باقة واسعة من الحلول الرقمية المتقدمة التي تلبي جميع احتياجاتك التقنية والتسويقية</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal"><div class="service-icon">📈</div><h3 class="service-title">التسويق الرقمي</h3><p class="service-desc">استراتيجيات تسويق متكاملة تشمل SEO، إعلانات مدفوعة، وإدارة سمعة، لتحقيق أقصى عائد على استثمارك الرقمي.</p><div class="service-price"><span>$149</span> <small>/ شهرياً</small></div><a href="#" class="service-link">اطلب الخدمة <span>←</span></a></div>
+    <div class="service-card reveal"><div class="service-icon">☁️</div><h3 class="service-title">الاستضافة السحابية</h3><p class="service-desc">خوادم سحابية عالية الأداء مع uptime 99.99%، SSL مجاني، ونسخ احتياطي تلقائي لحماية بياناتك.</p><div class="service-price"><span>$29</span> <small>/ شهرياً</small></div><a href="#" class="service-link">اطلب الخدمة <span>←</span></a></div>
+    <div class="service-card reveal"><div class="service-icon">🎯</div><h3 class="service-title">التصميم الجرافيكي</h3><p class="service-desc">هوية بصرية متكاملة، شعارات احترافية، تصاميم وسائل تواصل اجتماعي تجذب الانتباه وتبني ثقة العلامة التجارية.</p><div class="service-price"><span>$99</span> <small>/ شهرياً</small></div><a href="#" class="service-link">اطلب الخدمة <span>←</span></a></div>
+    <div class="service-card reveal"><div class="service-icon">🔒</div><h3 class="service-title">الأمن السيبراني</h3><p class="service-desc">فحص الثغرات، حماية مواقع الويب من الهجمات، وإدارة أمن المعلومات لضمان بيئة رقمية آمنة بالكامل.</p><div class="service-price"><span>$199</span> <small>/ شهرياً</small></div><a href="#" class="service-link">اطلب الخدمة <span>←</span></a></div>
+    <div class="service-card reveal"><div class="service-icon">💡</div><h3 class="service-title">الاستشارات التقنية</h3><p class="service-desc">استشارات متخصصة لتحسين البنية التحتية التقنية، اختيار الحلول المناسبة، وتطوير استراتيجية التحول الرقمي.</p><div class="service-price"><span>$249</span> <small>/ شهرياً</small></div><a href="#" class="service-link">اطلب الخدمة <span>←</span></a></div>
+    <div class="service-card reveal"><div class="service-icon">📊</div><h3 class="service-title">إدارة المشاريع</h3><p class="service-desc">أدوات ومنهجيات حديثة لإدارة المشاريع الرقمية، تتبع الإنجازات، وزيادة إنتاجية الفريق بأعلى كفاءة.</p><div class="service-price"><span>$129</span> <small>/ شهرياً</small></div><a href="#" class="service-link">اطلب الخدمة <span>←</span></a></div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing"><div class="pricing-head reveal"><div class="section-eyebrow"><span class="eyebrow-line"></span>خطط الأسعار<span class="eyebrow-line"></span></div><h2 class="section-h2">استثمار يليق بطموحك</h2><div class="gold-rule"></div><p class="section-lead">أسعار شفافة بلا رسوم خفية — ابدأ بالخطة التي تناسبك وتوسّع متى شئت</p></div><div class="pricing-grid"><div class="price-tile reveal"><div class="price-plan">المبتدئ</div><div class="price-wrap"><span class="price-cur">$</span><span class="price-num">29</span></div><div class="price-mo">شهريًا</div><ul class="price-feats"><li><span class="pf-icon">✦</span>موقع واحد</li><li><span class="pf-icon">✦</span>10 صفحات</li><li><span class="pf-icon">✦</span>5 GB تخزين سحابي</li><li><span class="pf-icon">✦</span>شهادة SSL مجانية</li><li><span class="pf-icon">✦</span>دعم بالبريد الإلكتروني</li></ul><a href="#" class="btn-ghost" style="display:block;text-align:center;">ابدأ الآن</a></div><div class="price-tile featured reveal"><div class="featured-ribbon">الأكثر طلبًا ✦</div><div class="price-plan">الاحترافي</div><div class="price-wrap"><span class="price-cur" style="color:var(--gold-lt)">$</span><span class="price-num">79</span></div><div class="price-mo">شهريًا</div><ul class="price-feats"><li><span class="pf-icon">✦</span>5 مواقع متكاملة</li><li><span class="pf-icon">✦</span>صفحات غير محدودة</li><li><span class="pf-icon">✦</span>50 GB تخزين سحابي</li><li><span class="pf-icon">✦</span>متجر إلكتروني كامل</li><li><span class="pf-icon">✦</span>منصة تعليمية متكاملة</li><li><span class="pf-icon">✦</span>دعم فني 24/7 أولوي</li></ul><a href="#" class="btn-gold" style="display:flex;justify-content:center;">ابدأ الآن</a></div><div class="price-tile reveal"><div class="price-plan">المؤسسي</div><div class="price-wrap"><span class="price-cur">$</span><span class="price-num">199</span></div><div class="price-mo">شهريًا</div><ul class="price-feats"><li><span class="pf-icon">✦</span>موقع غير محدودة</li><li><span class="pf-icon">✦</span>200 GB تخزين سحابي</li><li><span class="pf-icon">✦</span>API مخصص كامل</li><li><span class="pf-icon">✦</span>مدير حساب مخصص</li><li><span class="pf-icon">✦</span>تخصيص كامل وغير محدود</li><li><span class="pf-icon">✦</span>SLA مضمون 99.99%</li></ul><a href="#" class="btn-ghost" style="display:block;text-align:center;">تواصل معنا</a></div></div></section>
+
+<section class="testimonials" id="testimonials"><div class="testimonials-head reveal"><div class="section-eyebrow"><span class="eyebrow-line"></span>آراء عملائنا<span class="eyebrow-line"></span></div><h2 class="section-h2">ثقة تُبنى بالنتائج</h2><div class="gold-rule" style="margin:18px auto"></div></div><div class="test-grid"><div class="test-tile reveal"><div class="test-stars">★★★★★</div><p class="test-quote">"منصة نيوتن غيّرت معادلة عملي تمامًا. أصبحت أبني مواقع احترافية في أيام بدلاً من أسابيع، والنتيجة دائمًا تفوق توقعات عملائي."</p><div class="test-author"><div class="test-ava">أ</div><div><div class="test-name">أحمد الشمري</div><div class="test-role">مطوّر ويب مستقل — الرياض</div></div></div></div><div class="test-tile reveal"><div class="test-stars">★★★★★</div><p class="test-quote">"الجمع بين المنصة التعليمية والمتجر الإلكتروني في مكان واحد كان الحل المثالي. تضاعفت إيراداتي ثلاث مرات خلال ستة أشهر فقط."</p><div class="test-author"><div class="test-ava">س</div><div><div class="test-name">سارة العمري</div><div class="test-role">مدربة ومؤسسة أكاديمية — دبي</div></div></div></div><div class="test-tile reveal"><div class="test-stars">★★★★★</div><p class="test-quote">"الدعم الفني يرد في دقائق والمنصة مدروسة بعناية فائقة. التفاصيل الدقيقة في كل زاوية تجعلك تشعر أنك تعمل بأداة عالمية حقيقية."</p><div class="test-author"><div class="test-ava">م</div><div><div class="test-name">محمود الحربي</div><div class="test-role">صاحب متجر إلكتروني — الكويت</div></div></div></div></div></section>
+
+<section class="cta-section" id="cta"><div class="cta-inner reveal"><div class="section-eyebrow" style="justify-content:center"><span class="eyebrow-line"></span>ابدأ رحلتك<span class="eyebrow-line"></span></div><h2 class="cta-h2">جاهز لبناء موقعك<br>الاحترافي؟</h2><p class="cta-sub">انضم إلى أكثر من 50,000 منشئ محتوى وصاحب أعمال يثقون في منصة نيوتن يوميًا</p><div class="cta-btns"><a href="#" class="btn-gold">ابدأ مجانًا — 14 يومًا</a><a href="#" class="btn-ghost">احجز عرضًا توضيحيًا</a></div><p class="cta-note"><span>✓</span> لا تلزم بطاقة ائتمان &nbsp;&nbsp;<span>✓</span> إلغاء في أي وقت &nbsp;&nbsp;<span>✓</span> دعم مجاني كامل</p></div></section>
+
+<footer><div class="footer-grid"><div><div class="nav-brand" style="display:inline-flex;text-decoration:none"><div class="brand-gem" style="width:42px;height:42px"><svg viewBox="0 0 24 24" fill="none" style="width:20px;height:20px"><path d="M12 3.5c-1.7 0-2.8 2-2.8 3.5 0 1.5.8 2.8 2 3.5-2.2 1-3.7 3-3.7 5.5 0 2.2 1.8 3.2 3.2 3.2h2.6c1.4 0 3.2-1 3.2-3.2 0-2.5-1.5-4.5-3.7-5.5 1.2-.7 2-2 2-3.5 0-1.5-1.1-3.5-2.8-3.5z" fill="#D4AF58"/></svg></div><div class="brand-text" style="margin-right:14px"><span class="brand-ar">منصة نيوتن</span><span class="brand-en">NEWTON PLATFORM</span><span class="brand-by">محمد أمين</span></div></div><p class="footer-brand-blurb">منصة متكاملة لتصميم المواقع الإلكترونية تجمع بين قوة التعليم الرقمي والتجارة الإلكترونية في بيئة واحدة متطورة ومتقنة الصنع.</p></div><div class="footer-col"><h5>المنصات</h5><ul><li><a href="#">نيوتن للتعلّم</a></li><li><a href="#">نيوتن للتجارة</a></li><li><a href="#">قوالب جاهزة</a></li><li><a href="#">أدوات التصميم</a></li></ul></div><div class="footer-col"><h5>الشركة</h5><ul><li><a href="#">من نحن</a></li><li><a href="#">مدونتنا</a></li><li><a href="#">الوظائف</a></li><li><a href="#">اتصل بنا</a></li></ul></div><div class="footer-col"><h5>الدعم</h5><ul><li><a href="#">مركز المساعدة</a></li><li><a href="#">توثيق API</a></li><li><a href="#">سياسة الخصوصية</a></li><li><a href="#">شروط الاستخدام</a></li></ul></div></div><div class="footer-bottom"><span>© 2025 منصة نيوتن. جميع الحقوق محفوظة.</span><span>صُنع بإتقان بواسطة <b>محمد أمين</b></span></div></footer>
+
+<!-- Secret Admin Modal -->
+<div class="secret-modal-overlay" id="secretModal"><div class="secret-card"><button class="secret-close" onclick="closeSecretModal()">✕</button><div class="secret-auth-view" id="secretAuthView"><h2 class="secret-title">نظام التحكم السري — نيوتن</h2><p class="secret-subtitle">برجاء إدخال رمز الأمان للوصول إلى لوحة التحكم المتقدمة</p><div class="secret-input-wrap"><input type="password" class="secret-input" id="secretPasswordInput" placeholder="••••••••"><div class="secret-err-msg" id="secretErrMsg">رمز الأمان غير صحيح! حاول مرة أخرى.</div></div><button class="btn-gold" style="padding: 10px 24px; font-size:13px;" onclick="verifySecretCode()">تأكيد الدخول</button></div><div class="secret-dashboard-view" id="secretDashboardView"><h2 class="secret-title">إعدادات النظام الذكية</h2><p class="secret-subtitle" style="margin-bottom: 16px;">مرحباً محمد أمين، لديك صلاحيات الإشراف الكاملة الآن.</p><div class="secret-tabs-nav"><button class="secret-tab-btn active" onclick="switchSecretTab(0)">القائمة الأولى: إضافة منصات</button><button class="secret-tab-btn" onclick="switchSecretTab(1)">القائمة الثانية: حذف منصات</button><button class="secret-tab-btn" onclick="switchSecretTab(2)">القائمة الثالثة: سجلات الدخول</button></div><div class="secret-tab-content active"><div class="secret-list-item" style="flex-direction:column; align-items:stretch;"><div style="margin-bottom:8px; font-weight:bold;">إضافة منصة جديدة مع القسم والمميزات</div><input type="text" id="newPlatformName" placeholder="اسم المنصة" style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; padding:8px; margin-bottom:8px; color:white;"><input type="text" id="newPlatformSection" placeholder="القسم (مثال: منصة طبية متخصصة)" style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; padding:8px; margin-bottom:8px; color:white;"><textarea id="newPlatformDesc" placeholder="الوصف..." style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; padding:8px; margin-bottom:8px; color:white; min-height:60px;"></textarea><input type="text" id="newPlatformFeatures" placeholder="المميزات (مفصولة بفواصل: ميزة1, ميزة2, ميزة3)" style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; padding:8px; margin-bottom:12px; color:white;"><button class="btn-act-add" onclick="addCustomPlatform()" style="background:var(--teal);">➕ تفعيل وإضافة المنصة</button></div></div><div class="secret-tab-content"><div id="deletePlatformsList"></div></div><div class="secret-tab-content"><div id="accessLogsList"><div class="secret-list-item"><div><span class="log-status-dot"></span> مسؤول النظام: محمد أمين (iPad Browser)</div><span style="opacity: 0.5; font-size:11px;">اليوم 09:44 AM</span></div></div></div></div></div></div>
+
+<!-- Customer Login Modal -->
+<div class="customer-modal-overlay" id="customerModal"><div class="customer-card"><h3 style="color:var(--gold-lt); margin-bottom:20px;">تسجيل دخول العملاء</h3><input type="email" id="customerEmail" placeholder="البريد الإلكتروني" style="width:100%; margin-bottom:12px; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:white;"><input type="password" id="customerPass" placeholder="كلمة المرور" style="width:100%; margin-bottom:20px; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; color:white;"><button class="btn-gold" onclick="validateCustomerLogin()" style="width:100%; justify-content:center;">تسجيل الدخول</button><button class="btn-ghost" onclick="closeCustomerModal()" style="margin-top:12px; width:100%; justify-content:center;">إلغاء</button></div></div>
+
+<script>
+let customPlatforms = [];
+let accessLogs = [{ time: new Date().toLocaleString(), user: "مسؤول النظام: محمد أمين (iPad Browser)", status: "success" }];
+
+function renderDeleteList() {
+  const container = document.getElementById('deletePlatformsList');
+  if(!container) return;
+  const allPlatforms = [...document.querySelectorAll('#staticPlatforms .p-card, .custom-platform-card')].filter(card => {
+      const titleEl = card.querySelector('.card-h3');
+      if(titleEl && (titleEl.innerText.includes('نيوتن للتعلّم') || titleEl.innerText.includes('نيوتن للتجارة'))) return false;
+      return true;
+  });
+  if(allPlatforms.length === 0) { container.innerHTML = '<div class="secret-list-item">لا توجد منصات قابلة للحذف</div>'; return; }
+  container.innerHTML = allPlatforms.map((card, idx) => {
+      const title = card.querySelector('.card-h3')?.innerText || 'منصة غير مسماة';
+      return `<div class="secret-list-item"><span>${title}</span><button class="secret-btn-action btn-act-del" onclick="deletePlatformCard(${idx})">🗑️ حذف وإلغاء</button></div>`;
+  }).join('');
+}
+
+function deletePlatformCard(index) {
+  const allPlatforms = [...document.querySelectorAll('#staticPlatforms .p-card, .custom-platform-card')].filter(card => {
+      const titleEl = card.querySelector('.card-h3');
+      if(titleEl && (titleEl.innerText.includes('نيوتن للتعلّم') || titleEl.innerText.includes('نيوتن للتجارة'))) return false;
+      return true;
+  });
+  if(allPlatforms[index]) allPlatforms[index].remove();
+  renderDeleteList();
+}
+
+function addCustomPlatform() {
+  const name = document.getElementById('newPlatformName').value.trim();
+  const section = document.getElementById('newPlatformSection').value.trim();
+  const desc = document.getElementById('newPlatformDesc').value.trim();
+  const featuresRaw = document.getElementById('newPlatformFeatures').value.trim();
+  if(!name || !desc) { alert("يرجى ملء الاسم والوصف على الأقل"); return; }
+  const featuresList = featuresRaw ? featuresRaw.split(',').map(f => f.trim()).filter(f=>f) : ["ميزة احترافية مدمجة", "دعم فني متقدم", "أدوات تحليل ذكية"];
+  const container = document.getElementById('dynamicPlatformsContainer');
+  const newCard = document.createElement('div');
+  newCard.className = 'custom-platform-card p-card';
+  newCard.style.marginBottom = '20px';
+  newCard.innerHTML = `<div class="card-geo"></div><div class="card-body"><div class="card-eyebrow">${section || 'منصة مخصصة'}</div><h3 class="card-h3">${name}</h3><p class="card-desc">${desc}</p><ul class="card-feats">${featuresList.map(f => `<li><span class="feat-check">✓</span>${f}</li>`).join('')}</ul><a href="#" class="card-cta">استكشف المنصة <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>`;
+  container.appendChild(newCard);
+  document.getElementById('newPlatformName').value = '';
+  document.getElementById('newPlatformSection').value = '';
+  document.getElementById('newPlatformDesc').value = '';
+  document.getElementById('newPlatformFeatures').value = '';
+  renderDeleteList();
+}
+
+function addAccessLog(email, success) {
+  const timeStr = new Date().toLocaleString();
+  accessLogs.unshift({ time: timeStr, user: email, status: success ? 'success' : 'failed' });
+  updateLogsUI();
+}
+
+function updateLogsUI() {
+  const logsContainer = document.getElementById('accessLogsList');
+  if(!logsContainer) return;
+  logsContainer.innerHTML = accessLogs.map(log => `<div class="secret-list-item"><div><span class="log-status-dot" style="background:${log.status === 'success' ? 'var(--teal)' : '#FF5F57'}"></span> ${log.user}</div><span style="opacity: 0.5; font-size:11px;">${log.time}</span></div>`).join('');
+}
+
+function openCustomerLoginModal() { document.getElementById('customerModal').classList.add('active'); }
+function closeCustomerModal() { document.getElementById('customerModal').classList.remove('active'); }
+
+function validateCustomerLogin() {
+  const email = document.getElementById('customerEmail').value;
+  const pass = document.getElementById('customerPass').value;
+  if(email && pass) {
+    addAccessLog(email, true);
+    alert(`مرحباً ${email}، تم تسجيل الدخول بنجاح. سيتم حفظ بيانات الدخول في سجلات الأمان.`);
+    closeCustomerModal();
+    document.getElementById('customerEmail').value = '';
+    document.getElementById('customerPass').value = '';
+  } else {
+    addAccessLog(email || "بريد غير معروف", false);
+    alert("يرجى إدخال البريد الإلكتروني وكلمة المرور بشكل صحيح.");
+  }
+}
+
+function handleSecretSearch() { const query = document.getElementById('navSearchInput').value.trim(); if (query === '1976') { document.getElementById('secretErrMsg').style.display = 'none'; document.getElementById('secretPasswordInput').value = ''; document.getElementById('secretAuthView').style.display = 'block'; document.getElementById('secretDashboardView').style.display = 'none'; document.getElementById('secretModal').classList.add('active'); } }
+document.getElementById('navSearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') handleSecretSearch(); });
+function closeSecretModal() { document.getElementById('secretModal').classList.remove('active'); }
+function verifySecretCode() { const pwd = document.getElementById('secretPasswordInput').value; if (pwd === 'newton1976') { document.getElementById('secretAuthView').style.display = 'none'; document.getElementById('secretDashboardView').style.display = 'block'; renderDeleteList(); updateLogsUI(); } else { document.getElementById('secretErrMsg').style.display = 'block'; } }
+document.getElementById('secretPasswordInput').addEventListener('keydown', e => { if (e.key === 'Enter') verifySecretCode(); });
+function switchSecretTab(index) { const tabs = document.querySelectorAll('.secret-tab-btn'); const contents = document.querySelectorAll('.secret-tab-content'); tabs.forEach((tab, i) => { if (i === index) tab.classList.add('active'); else tab.classList.remove('active'); }); contents.forEach((content, i) => { if (i === index) content.classList.add('active'); else content.classList.remove('active'); }); if(index === 1) renderDeleteList(); if(index === 2) updateLogsUI(); }
+const revObs = new IntersectionObserver((entries)=>{ entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('in'), i*70); } }); },{threshold:.1, rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>revObs.observe(el));
+function countUp(el, end, suffix){ let n=0; const step=end/55; const t=setInterval(()=>{ n+=step; if(n>=end){n=end;clearInterval(t);} if(end>=1000) el.textContent=Math.round(n/1000)+'K'+suffix.replace('K+','+'); else el.textContent=Math.round(n)+suffix; },22); }
+const cntObs = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ cntObs.unobserve(e.target); e.target.querySelectorAll('[data-target]').forEach(el=>{ countUp(el, +el.dataset.target, el.dataset.suffix||''); }); } }); },{threshold:.5});
+const ribbon=document.querySelector('.stats-ribbon'); if(ribbon) cntObs.observe(ribbon);
+document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',e=>{ e.preventDefault(); const t=document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); }); });
+document.addEventListener('mousemove',e=>{ const rx=(e.clientX/innerWidth-.5)*30; const ry=(e.clientY/innerHeight-.5)*20; document.querySelectorAll('.blob-1').forEach(b=>b.style.transform=`translate(${rx*.8}px,${ry*.8}px)`); document.querySelectorAll('.blob-2').forEach(b=>b.style.transform=`translate(${-rx*.5}px,${-ry*.5}px)`); });
+</script>
+</body>
+</html>
